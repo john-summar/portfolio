@@ -6,5 +6,5 @@ LinkedIn: https://www.linkedin.com/in/johnsummar1
 
 Tableau Public: https://public.tableau.com/app/profile/john.summar/vizzes
 
-Example Shiny App: https://jasummar.shinyapps.io/Vols_Football_Google_Interest/
+Example Shiny App: [https://jasummar.shinyapps.io/Vols_Football_Google_Interest/](https://jasummar.shinyapps.io/VolsForecastAndAnalysis/)
 

@@ -4,7 +4,7 @@ SELECT Confirmation#, CONCAT(FirstName, ' ', LastName) AS ApplicantName, Permane
        MondayClassSchedule, TuesdayClassSchedule, WednesdayClassSchedule, ThursdayClassSchedule, FridayClassSchedule,  Essay1, Essay2, InterviewDate
 FROM Applicant
 JOIN Interview
-    ON Interview.ApplicantID = Applicant.ApplicantID
+    ON Interview.ApplicantID = Applicant.ApplicantID;
 
 
 --Pay information for each employee, including standard rate for the job role, starting pay rate,
@@ -21,7 +21,7 @@ Left JOIN JobRole
     ON JobRole.JobRoleID = AssignedJobRole.JobRoleID
 JOIN Applicant
     ON Applicant.ApplicantID = Employee.HireapplicantID
-Group BY Employee.HireApplicantID,CurrentPay,(Applicant.FirstName+' '+Applicant.LastName),StandardRate
+Group BY Employee.HireApplicantID,CurrentPay,(Applicant.FirstName+' '+Applicant.LastName),StandardRate;
 
 SELECT Applicant.ApplicantID,
     (Applicant.FirstName + ' ' + Applicant.LastName) as ApplicantName,
@@ -40,7 +40,7 @@ JOIN (SELECT Employee.HireApplicantID, (CurrentPay - PayRaise) as 'StartingPay'
     JOIN Evaluation ON Evaluation.HireApplicantID = Employee.HireApplicantID
     ) AS StartPayTable
         ON StartPayTable.HireApplicantID = Employee.HireApplicantID
-GROUP BY Applicant.FirstName,Applicant.LastName, Applicant.ApplicantID, StandardRate, Employee.CurrentPay, Evaluation.Date,StartPayTable.StartingPay
+GROUP BY Applicant.FirstName,Applicant.LastName, Applicant.ApplicantID, StandardRate, Employee.CurrentPay, Evaluation.Date,StartPayTable.StartingPay;
 
 
 --A list of employees who do not have First Aid or CPR certificates or whose First Aid and CPR certifications expired before their last pay raise evaluation
@@ -54,7 +54,7 @@ JOIN Evaluation
 JOIN Assignment
     ON Assignment.HireApplicantID = Evaluation.HireApplicantID
 WHERE CertName NOT IN ('First Aid', 'CPR')
-    OR ExpirationDate < Evaluation.Date
+    OR ExpirationDate < Evaluation.Date;
 
 SELECT DISTINCT (FirstName +' '+ LastName) AS EmployeeName,Employee.HireApplicantID
 FROM Applicant
@@ -66,7 +66,7 @@ WHERE CertificationID NOT IN (SELECT CertificationID FROM Certification WHERE Ce
     OR ExpirationDate < (SELECT max(xyz)
                             FROM (SELECT max(DATE) as xyz
                                     FROM Evaluation
-                                        GROUP BY HireapplicantId) as xyztbl)
+                                        GROUP BY HireapplicantId) as xyztbl);
 
 --A list of employees by program, job role, and the average hours worked per week in that job role and program.
 
@@ -80,7 +80,7 @@ JOIN JobRole
     ON JobRole.JobRoleID = AssignedJobRole.JobRoleID
 JOIN Program
     ON Program.ProgramID = JobRole.ProgramID
-GROUP BY JobRole.JobRoleID, HourlyExpectation, Employee.HireApplicantID, Name, FirstName, LastName
+GROUP BY JobRole.JobRoleID, HourlyExpectation, Employee.HireApplicantID, Name, FirstName, LastName;
 
 
 --The number of activities each program manages, and the total additional revenue brought in by each program 
@@ -92,7 +92,7 @@ JOIN Program
     ON Program.ProgramID = Activity.ProgramID
 JOIN Enrollment
     ON Enrollment.ActivityID = Activity.ActivityID
-GROUP BY Program.ProgramID, AdditionalCost
+GROUP BY Program.ProgramID, AdditionalCost;
 
 
 --Who all has been interviewed, and for which job they interviewed.
@@ -100,7 +100,7 @@ SELECT Applicant.FirstName, Applicant.LastName, StandardJobDescription ,Intervie
 FROM Applicant
 JOIN Interview ON Applicant.ApplicantID = Interview.ApplicantID
 JOIN AssignedJobRole ON Applicant.ApplicantID = AssignedJobRole.HireApplicantID
-JOIN JobRole ON AssignedJobRole.JobRoleID = AssignedJobRole.JobRoleID
+JOIN JobRole ON AssignedJobRole.JobRoleID = AssignedJobRole.JobRoleID;
 
 
 --What applicants have previously worked for the university, and what was their most recent position? 
@@ -108,4 +108,4 @@ SELECT Applicant.ApplicantID, FirstName, LastName, Position, CompanyName
 FROM Applicant
 JOIN JobHistory
 ON Applicant.ApplicantID=JobHistory.ApplicantID
-WHERE UniversityEmp= 'Yes'
+WHERE UniversityEmp= 'Yes';
